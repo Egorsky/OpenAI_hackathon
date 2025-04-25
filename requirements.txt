@@ -1,0 +1,10 @@
+langchain
+langchain-openai
+openai-agents
+langgraph 
+neo4j
+pandas
+numpy
+pydantic
+fastapi
+ruff
