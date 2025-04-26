@@ -1,11 +1,11 @@
-# routes.py
-import time
 from fastapi import APIRouter, HTTPException
-from typing import Dict
 from .models import CreateSessionRequest, ChatRequest, ChatResponse
 from .session_store import agents as _agents 
+from ..utils  import load_yaml
 from .utils import llm_response
 from ..agent import AsyncZepMemoryAgent
+
+config = load_yaml("config.yaml")
 
 router = APIRouter(tags=["chat"])
 
@@ -35,7 +35,8 @@ async def chat(payload: ChatRequest):
     agent = _agents.get(payload.session_id)
     if not agent:
         raise HTTPException(404, f"Session {payload.session_id!r} not found.")
-    reply = await agent.chat(payload.user_input)
+    
+    reply = await agent.chat(payload.user_input, payload.medieval_mode)
     return {
         "response": reply,
         "status": "success",

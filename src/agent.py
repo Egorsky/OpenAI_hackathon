@@ -68,7 +68,7 @@ class AsyncZepMemoryAgent:
             ]
         )
 
-    async def chat(self, user_input: str) -> str:
+    async def chat(self, user_input: str, medieval_mode) -> str:
         """
         Chat with the agent and store the conversation in Zep memory.
 
@@ -90,10 +90,14 @@ class AsyncZepMemoryAgent:
 
         # Update the agent's instructions with the latest memory context
         memory_context = await self.memory_manager.get_memory()
-        self.agent.instructions = (
-            config["orchestrator_agent"]["instructions"] + "\n" + f"Memory Context: {memory_context}"
-        )
-
+        if medieval_mode:
+            self.agent.instructions = (
+                config["orchestrator_agent"]["medieval_instructions"] + "\n" + f"Memory Context: {memory_context}"
+            )
+        else:
+            self.agent.instructions = (
+                config["orchestrator_agent"]["instructions"] + "\n" + f"Memory Context: {memory_context}"
+            )
         # Run the agent with the user input directly
         result = await Runner.run(self.agent, user_input)
 

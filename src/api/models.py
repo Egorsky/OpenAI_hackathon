@@ -11,6 +11,7 @@ class CreateSessionRequest(BaseModel):
 class ChatRequest(BaseModel):
     session_id: str
     user_input: str
+    medieval_mode: bool = False
 
 class ChatResponse(BaseModel):
     response:         str
