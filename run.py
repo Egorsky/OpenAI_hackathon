@@ -4,7 +4,7 @@ Prod: gunicorn -k uvicorn.workers.UvicornWorker -w 4 app:app  :contentReference[
 """
 
 import os, uvicorn
-from back_app import app
+from OpenAI_hackathon.api.app import app
 
 if __name__ == "__main__":
     host = os.getenv("HOST", "127.0.0.1")

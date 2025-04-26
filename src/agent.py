@@ -168,6 +168,7 @@ async def run_agent(
     
 
 async def main():
+    # Dummy data that we used for testing purposes
     session_id = f"demo-session-{int(time.time())}"
     user_id     = "123"
     email       = "abc@gmail.com"

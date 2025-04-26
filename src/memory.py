@@ -1,12 +1,8 @@
 import os
-import asyncio
 import time
 from typing import Dict, List, Optional, Any
 import uuid
 import dotenv
-import click
-
-from agents import Agent, Runner, function_tool, set_default_openai_key
 
 from zep_cloud.client import AsyncZep
 from zep_cloud.types import Message as ZepMessage

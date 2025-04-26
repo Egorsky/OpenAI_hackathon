@@ -20,9 +20,15 @@ delete_env:
 install:
 	uv pip install -r requirements.txt
 
+# Run the agent.py in an interactive shell
 .PHONY: run
 run:
 	uv run $(PYTHON) -m src.agent
+
+# Run the FastAPI app
+.PHONY: app
+app:
+	uv run -m uvicorn src.api.app:app --reload
 
 # Lint code
 .PHONY: lint
