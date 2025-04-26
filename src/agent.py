@@ -1,8 +1,6 @@
 import asyncio
 from agents import Agent, Runner, set_trace_processors, set_default_openai_key
-from tools import fetch_aave_info
-from tools.fraud import check_scam_address
-from agents import function_tool
+from tools import fetch_aave_info, check_scam_address, get_search_memory_tool
 from .memory import AsyncZepMemoryManager
 from .utils import load_yaml
 from opik.integrations.openai.agents import OpikTracingProcessor
@@ -52,18 +50,7 @@ class AsyncZepMemoryAgent:
         # Initialize the AsyncZep memory manager
         await self.memory_manager.initialize()
 
-        @function_tool
-        async def search_memory(query: str) -> str:
-            """Search for relevant information facts about the user."""
-            results = await self.memory_manager.search_memory(query)
-            if not results:
-                return "I couldn't find any relevant facts about the user."
-
-            formatted_results = "\n".join(
-                [f"- {result['role']}: {result['content']}" for result in results]
-            )
-
-            return f"Facts about the user:\n{formatted_results}"
+        search_memory = get_search_memory_tool(self.memory_manager)
 
         # Get memory context to include in the system message
         memory_context = await self.memory_manager.get_memory()
