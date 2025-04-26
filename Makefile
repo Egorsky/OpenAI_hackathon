@@ -36,7 +36,6 @@ lint:
 	ruff check
 	ruff format 
 	
-
 # Clean up
 .PHONY: clean
 clean-pyc:
