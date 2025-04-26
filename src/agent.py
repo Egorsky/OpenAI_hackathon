@@ -1,6 +1,6 @@
 import asyncio
 from agents import Agent, Runner, set_trace_processors, set_default_openai_key
-from tools import fetch_aave_info, check_scam_address, get_search_memory_tool
+from tools import fetch_aave_info, check_scam_address, get_search_memory_tool, web_search_preview
 from .memory import AsyncZepMemoryManager
 from .utils import load_yaml
 from opik.integrations.openai.agents import OpikTracingProcessor
@@ -64,6 +64,7 @@ class AsyncZepMemoryAgent:
                 fetch_aave_info,
                 check_scam_address,
                 search_memory,
+                web_search_preview,
             ]
         )
 
