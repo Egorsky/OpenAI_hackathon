@@ -11,9 +11,5 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
     reload_flag = os.getenv("UVICORN_RELOAD", "true").lower() == "true"
 
-    # Pass an *import string* when reload is on, otherwise pass the object
-    if reload_flag:
-        uvicorn.run("app:app", host=host, port=port, reload=True)  # ← import string
-    else:
-        from app import app
-        uvicorn.run(app, host=host, port=port)
+    # ALWAYS use an import string so reload & workers work
+    uvicorn.run("back_app:app", host=host, port=port, reload=reload_flag)
