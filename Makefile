@@ -20,6 +20,10 @@ delete_env:
 install:
 	uv pip install -r requirements.txt
 
+.PHONY: run
+run:
+	uv run $(PYTHON) -m src.agent
+
 # Lint code
 .PHONY: lint
 lint: 
