@@ -1,28 +1,39 @@
 import os
+import time
 from functools import wraps
 from fastapi import FastAPI
+from src.agent import AsyncZepMemoryAgent
 from fastapi.middleware.cors import CORSMiddleware
+
+memory_agent = AsyncZepMemoryAgent(
+    session_id=f"web-session-{int(time.time())}",
+    user_id="web_user",
+    email="web@example.com"
+    first_name="Web",
+    last_name="User",
+)
 
 def llm_response(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
         try:
-            # Placeholder for LLM call. Now placeholder.
-            has_llm = False
+            if memory_agent.agent is None:
+                await memory_agent.initialize()
             
-            if not has_llm:
-                return {
-                    "response": "I'm currently in demo mode. Please connect an LLM agent to enable full functionality. In the meantime, I can show you how the interface works!",
-                    "status": "warning",
-                    "original_payload": kwargs.get("payload", {}),
-                }
-                
-            # Call the actual function when LLM is available
-            result = await func(*args, **kwargs)
-            return result
+            # Get the user message from the payload    
+            user_message = kwargs.get("payload", {}).get("message", "")
+            
+            # Get response
+            response = await memory_agent.chat(user_message)
+            
+            return{
+                "response": response,
+                "status": "success",
+                "original_payload": kwargs.get("payload"),
+            }
         except Exception as e:
             return {
-                "response": f"Error: {str(e)}",
+                "response": str(e),
                 "status": "error",
                 "original_payload": kwargs.get("payload", {}),
             }
@@ -30,12 +41,11 @@ def llm_response(func):
 
 def create_app() -> FastAPI:
     app = FastAPI(
-    
-        title="Echo API",
-        description="A minimal FastAPI backend that echoes JSON payloads.",
+        title="Agent Factor API",
+        description="FastAPI backend with LLM agent.",
         version="1.0.0",
         )
-    origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+    origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
     
     app.add_middleware(
             CORSMiddleware,
