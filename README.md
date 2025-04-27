@@ -11,7 +11,7 @@ This project is made in 24+ hours during OpenAI hackaton in Warsaw, Poland. The 
 Frontend is fully made with Lovable <img src="https://github.com/user-attachments/assets/ce24933b-5c1a-41d2-aa1a-c527f15d11b3"
      alt="my-icon"
      width="20">
-. It sonsists of:
+. It consists of:
 
 - React with TypeScript
 - Vite for build tooling
