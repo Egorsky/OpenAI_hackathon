@@ -43,13 +43,15 @@ Frontend is fully made with Lovable <img src="https://github.com/user-attachment
 ```
 project/
 ├── frontend/          # React + TypeScript frontend
-├── back_app/         # FastAPI backend
 ├── src/             # Core source code
+    ├── api         # Folder with FastAPI functionality
+        ├── app.py  # FastAPI backend
 │   ├── agent.py    # Agent implementation
-│   └── utils.py    # Utility functions
 └── tools/          # Agent tools implementation
     ├── aave.py     # Aave integration
     └── fraud.py    # Fraud detection
+    └── web_search.py    # Blockchain web search with guardrails
+    └── search_memory.py    # Memory tool
 ```
 
 # Getting Started
@@ -70,11 +72,10 @@ git clone https://github.com/yourusername/agent-factor.git
 cd agent-factor
 
 # Create and activate virtual environment
-python -m venv venv
-.\venv\Scripts\activate
+make env
 
 # Install dependencies
-pip install -r requirements.txt
+make install
 
 # Create .env file
 copy .env.example .env
@@ -98,7 +99,7 @@ copy .env.example .env.local
 ### Start Backend
 ```bash
 # From project root with venv activated
-python run.py
+make app
 ```
 Backend will start at http://localhost:8000
 
@@ -111,12 +112,11 @@ npm run dev
 Frontend will start at http://localhost:5173
 
 # Features
-- 🤖 AI-powered crypto asset management
+- 🤖 Memory tool
 - 🔒 Fraud detection for wallet addresses
 - 📊 Aave V3 integration for DeFi insights
 - 🌐 Web search capabilities for crypto information
 - 🌙 Dark/Medieval mode support
-- 💼 Wallet connection and management
 
 # Contributing
 This project was created during the OpenAI hackathon in Warsaw, Poland. Feel free to submit issues and enhancement requests.

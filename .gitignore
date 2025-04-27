@@ -49,7 +49,6 @@ poetry.lock
 
 # Environments
 .env
-.env.*
 .venv
 
 # mypy
